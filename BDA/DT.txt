@@ -1,0 +1,517 @@
+stream = list(map(int, input('enter input stream: ').split()))
+
+m = int(input('enter mod: '))
+fxn = input('enter hash fxn: ')
+hash = []
+for j in range(0, len(fxn)):
+    if fxn[j] == 'x':
+        if j == 0:
+            hash.append(1)
+        else:
+            hash.append(int(fxn[j-1]))
+    elif fxn[j] == '+':
+        hash.append(int(fxn[j+1]))
+
+if len(hash) == 1:
+    hash.append(0)
+
+hashes = []
+for val in stream:
+    hashes.append((hash[0]*val+hash[1])%m)
+
+print(f'\nhash values: {hashes}')
+print(f'hash values binary: {list(map(lambda x:bin(x).replace("0b", ""), hashes))}')
+
+def calc_trailing_zeroes(n):
+    c = 0
+    while 1:
+        if n == 0:
+            c = 0
+            break
+        elif n&1 == 0:
+            c += 1
+            n >>= 1
+        else:
+            break
+
+    return c
+
+trailing_zeroes_count = list(map(calc_trailing_zeroes, hashes))
+print(f'trailing zeroes: {trailing_zeroes_count}')
+
+print(f'\nnumber of distinct elements: {2**max(trailing_zeroes_count)}')
+
+
+
+
+
+
+
+
+
+
+m = int(input('enter mod: '))
+n = int(input('enter number of hash functions: '))
+
+hashes = []
+for i in range(0, n):
+    fxn = input(f'enter hash fxn {i+1}: ')
+    hash = []
+    for j in range(0, len(fxn)):
+        if fxn[j] == 'x':
+            if j == 0:
+                hash.append(1)
+            else:
+                hash.append(int(fxn[j-1]))
+        elif fxn[j] == '+':
+            hash.append(int(fxn[j+1]))
+    
+    if len(hash) == 1:
+        hash.append(0)
+    hashes.append(hash)
+
+filter = [0 for i in range(0, m)]
+print(f'\ncurrent bloom filter: {filter}')
+
+n = int(input('\nenter number of values to insert: '))
+for i in range(0, n):
+    v = int(input(f'enter value {i+1}: '))
+    for hash in hashes:
+        filter[(v*hash[0]+hash[1])%m] = 1
+    print(f'current bloom filter: {filter}\n')
+
+
+n = int(input('\nenter number of values to query: '))
+for i in range(0, n):
+    v = int(input(f'enter value {i+1}: '))
+    neg = False
+    for hash in hashes:
+        if filter[(v*hash[0]+hash[1])%m] == 0:
+            print(f'{v} is surely not present - NEGATIVE\n')
+            neg = True
+            break
+
+    if neg == False:
+        print(f'{v} is probably present - FALSE POSITIVE\n')
+        
+        
+        
+        
+        
+        
+        
+        
+df <- data.frame(
+	Employee=c("Jon", "Rob", "Arya", "Sansa", "Theon"),
+	Id=c(1,2,3,4,5),
+	Salary=c(10000,15000,20000,25000,5000),
+	Age=c(21,23,22,25,27),
+	Gender=c('M','M','F','F','M')
+)
+
+summary(df)
+
+
+
+
+
+df<-data.frame(
+	Subject=c(1,2,3,4,5,6),
+	Class=c(1,2,1,2,1,2),
+	Marks=c(56,75,48,69,84,53)
+)
+
+subset(df, Subject < 4)
+df[df$Subject < 3 & df$Class == 2, ]
+
+sub<-c(unlist(subset(df, select=c(Subject))))
+marks<-c(unlist(subset(df, select=c(Marks))))
+plot(sub,marks, type="l")
+
+barplot(t(as.matrix(subset(df, select=c(Marks)))))
+
+
+
+
+
+bread<-c(12,3,5,11,9)
+milk<-c(21,27,18,20,15)
+cola<-c(10,1,33,6,12)
+choco<-c(6,7,4,13,12)
+detergent<-c(5,8,12,20,23)
+
+days<-c("monday","tuesday","wednesday","thursday","friday")
+
+barplot(bread, names.arg=days, xlab="Days", ylab="Units sold", main="Bread sales")
+
+
+
+
+
+
+
+
+arr=c(23, 45, 10, 34, 89, 20, 67, 99)
+asc<-sort(arr)
+asc
+desc<-rev(asc)
+desc
+
+barplot(asc, main = "Ascending Order", xlab = "Index", ylab = "Value")
+
+
+
+
+
+
+
+
+
+
+data<-data.frame(
+	Name=c("Vivek","Karan","James","Soham","Renu","Farah"),
+	Salary=c(21000,55000,67000,50000,54000,40000)
+)
+
+data2<-data.frame(
+	Name=c("Rohit"),
+	Salary=c(7000)
+)
+
+final<-rbind(data,data2)
+
+barplot(final$Salary, names.arg=final$Name)
+
+
+
+
+
+
+
+
+
+# 7 Analyse and visualize churn modelling data using R.
+        
+        # Load the churn modeling data
+        churn_data <- read.csv("E:\\Thadomal Shahani Engineering College\\Sem 7\\Assignments\\Big Data Analysis\\Pracs and Viva\\BDA Datasets\\Churn_Modelling.csv", header = TRUE)
+        
+        # Exploratory Data Analysis (EDA)
+        cat("First few rows of the dataset:\n")
+        print(head(churn_data))
+        cat("\nDataset structure:\n")
+        print(str(churn_data))
+        cat("\nSummary statistics for the dataset:\n")
+        print(summary(churn_data))
+        
+        # Data Visualization
+        par(mfrow = c(2, 2))  # Arrange plots in a 2x2 grid
+        
+        # Histogram for Age
+        hist(churn_data$Age, main = "Distribution of Age", xlab = "Age")
+        
+        # Boxplot for CreditScore by Geography
+        boxplot(CreditScore ~ Geography, data = churn_data, main = "CreditScore by Geography")
+        
+        # Barplot for Gender
+        barplot(table(churn_data$Gender), main = "Gender Distribution", xlab = "Gender")
+        
+        # Pie chart for Churn Rate
+        churn_rate <- mean(churn_data$Exited) * 100
+        labels <- c("Churned", "Not Churned")
+        sizes <- c(churn_rate, 100 - churn_rate)
+        pie(sizes, labels, main = "Churn Rate", col = c("red", "green"))
+        
+        # Churn Analysis
+        overall_churn_rate <- sum(churn_data$Exited) / nrow(churn_data) * 100
+        churn_by_geography <- aggregate(Exited ~ Geography, data = churn_data, FUN = function(x) sum(x) / length(x) * 100)
+        churn_by_gender <- aggregate(Exited ~ Gender, data = churn_data, FUN = function(x) sum(x) / length(x) * 100)
+        
+        cat("\nOverall Churn Rate: ", overall_churn_rate, "%\n")
+        cat("\nChurn Rate by Geography:\n")
+        print(churn_by_geography)
+        cat("\nChurn Rate by Gender:\n")
+        print(churn_by_gender)
+        
+        
+        # 8 Analyse and visualize IRIS data using R.
+        
+        
+        # Load the IRIS dataset
+        data(iris)
+        
+        # Exploratory Data Analysis (EDA)
+        cat("First few rows of the dataset:\n")
+        head(iris)
+        cat("\nDataset structure:\n")
+        str(iris)
+        cat("\nSummary statistics for the dataset:\n")
+        summary(iris)
+        
+        # Data Visualization
+        par(mfrow = c(2, 2))  # Arrange plots in a 2x2 grid
+        
+        # Histogram for Sepal.Length
+        hist(iris$Sepal.Length, main = "Distribution of Sepal.Length", xlab = "Sepal.Length")
+        
+        # Boxplot for Sepal.Length by Species
+        boxplot(Sepal.Length ~ Species, data = iris, main = "Boxplot of Sepal.Length by Species")
+        
+        # Scatterplot for Sepal.Length vs. Sepal.Width
+        plot(iris$Sepal.Length, iris$Sepal.Width, pch = 19, col = iris$Species, main = "Sepal Length vs. Sepal Width", xlab = "Sepal Length", ylab = "Sepal Width")
+        legend("topright", legend = levels(iris$Species), col = 1:3, pch = 19)
+        
+        # Pair Plot
+        library(GGally)
+        ggpairs(iris, columns = 1:4, aes(color = Species))
+        
+        # Statistical Analysis
+        cat("Mean of Sepal.Length by Species:\n")
+        aggregate(Sepal.Length ~ Species, data = iris, FUN = mean)
+        
+        cat("\nCorrelation Matrix:\n")
+        cor(iris[, 1:4])
+        
+        
+        # 9 Analyse and visualize supermarket data using R.
+        
+        # Load the supermarket data
+        supermarket_data <- read.csv("E:\\Thadomal Shahani Engineering College\\Sem 7\\Assignments\\Big Data Analysis\\Pracs and Viva\\BDA Datasets\\supermarket_sales.csv", header = TRUE)
+        
+        # Exploratory Data Analysis (EDA)
+        cat("First few rows of the dataset:\n")
+        print(head(supermarket_data))
+        cat("\nDataset structure:\n")
+        print(str(supermarket_data))
+        cat("\nSummary statistics for the dataset:\n")
+        print(summary(supermarket_data))
+        
+        # Data Visualization
+        par(mfrow = c(2, 2))  # Arrange plots in a 2x2 grid
+        
+        # Histogram for Unit price
+        hist(supermarket_data$Unit.price, main = "Distribution of Unit Price", xlab = "Unit Price")
+        
+        # Barplot for Branch
+        barplot(table(supermarket_data$Branch), main = "Branch Distribution", xlab = "Branch")
+        
+        # Scatterplot for Quantity vs. `Unit price`
+        plot(supermarket_data$Quantity, supermarket_data$`Unit price`, pch = 19, main = "Quantity vs. Unit Price", xlab = "Quantity", ylab = "Unit Price")
+        
+        # Barplot for Customer type
+        plot(supermarket_data$Quantity, supermarket_data$`Unit price`, pch = 19, main = "Quantity vs. Unit Price", xlab = "Quantity", ylab = "Unit Price", xlim = c(0, max(supermarket_data$Quantity)), ylim = c(0, max(supermarket_data$Unit.price)))
+        
+        # Sales Analysis
+        total_sales_by_branch <- tapply(supermarket_data$`Total`, supermarket_data$Branch, sum)
+        top_selling_products <- names(sort(table(supermarket_data$Product.line), decreasing = TRUE)[1:5])
+        gross_income_by_branch <- tapply(supermarket_data$gross.income, supermarket_data$Branch, sum)
+        
+        cat("\nTotal Sales by Branch:\n")
+        print(total_sales_by_branch)
+        cat("\nTop Selling Products:\n")
+        print(top_selling_products)
+        cat("\nGross Income by Branch:\n")
+        print(gross_income_by_branch)
+        
+        
+        # 10 Analyse and visualize Loan data using R
+        
+        # Load the loan data
+        loan_data <- read.csv("E:\\Thadomal Shahani Engineering College\\Sem 7\\Assignments\\Big Data Analysis\\Pracs and Viva\\BDA Datasets\\loan_data_set.csv", header = TRUE)
+        
+        # Exploratory Data Analysis (EDA)
+        cat("First few rows of the dataset:\n")
+        print(head(loan_data))
+        cat("\nDataset structure:\n")
+        print(str(loan_data))
+        cat("\nSummary statistics for the dataset:\n")
+        print(summary(loan_data))
+        
+        # Data Visualization
+        par(mfrow = c(2, 2))  # Arrange plots in a 2x2 grid
+        
+        # Histogram for ApplicantIncome
+        hist(loan_data$ApplicantIncome, main = "Applicant Income Distribution", xlab = "Applicant Income")
+        
+        # Barplot for Gender
+        barplot(table(loan_data$Gender), main = "Gender Distribution", xlab = "Gender")
+        
+        # Scatterplot for ApplicantIncome vs. CoapplicantIncome
+        plot(loan_data$ApplicantIncome, loan_data$CoapplicantIncome, pch = 19, main = "Applicant Income vs. Coapplicant Income", xlab = "Applicant Income", ylab = "Coapplicant Income")
+        
+        # Barplot for Loan_Status
+        barplot(table(loan_data$Loan_Status), main = "Loan Status Distribution", xlab = "Loan Status")
+        
+        # Loan Approval Analysis
+        approval_by_gender <- table(loan_data$Gender, loan_data$Loan_Status)
+        approval_by_education <- table(loan_data$Education, loan_data$Loan_Status)
+        credit_history_approval <- table(loan_data$Credit_History, loan_data$Loan_Status)
+        
+        cat("\nLoan Approval by Gender:\n")
+        print(approval_by_gender)
+        cat("\nLoan Approval by Education:\n")
+        print(approval_by_education)
+        cat("\nCredit History vs. Loan Approval:\n")
+        print(credit_history_approval)
+        
+        
+        
+        
+ # 2 For anydataset visialize the following types of chart : Scatterplot. Bubble Chart, Bar Chart ,  Dot Plots ,Histogram ,Box Plot ,Pie Chart
+        
+        # Sample dataset
+        set.seed(123) # for reproducibility
+        data <- data.frame(
+          X = rnorm(100),                 # Random numeric data for X-axis
+          Y = rnorm(100),                 # Random numeric data for Y-axis
+          Size = runif(100, 1, 10),      # Random sizes for bubbles
+          Category = sample(letters[1:5], 100, replace = TRUE),  # Categories for bar chart and pie chart
+          Value = rpois(100, 5)          # Random data for bar chart
+        )
+        
+        # Scatterplot
+        plot(data$X, data$Y, main = "Scatterplot", xlab = "X-axis", ylab = "Y-axis")
+        
+        # Bubble Chart
+        library(ggplot2)
+        ggplot(data, aes(x = X, y = Y, size = Size)) +
+          geom_point() +
+          labs(title = "Bubble Chart", x = "X-axis", y = "Y-axis")
+        
+        # Bar Chart
+        barplot(table(data$Category), main = "Bar Chart", xlab = "Category", ylab = "Frequency")
+        
+        # Dot Plot
+        stripchart(data$X, main = "Dot Plot", xlab = "X-axis")
+        
+        # Histogram
+        hist(data$X, main = "Histogram", xlab = "X-axis")
+        
+        # Box Plot
+        boxplot(data$X, main = "Box Plot")
+        
+        # Pie Chart
+        pie(table(data$Category), main = "Pie Chart")
+
+
+
+
+
+
+
+
+
+echo Hello World. Welcome to Hadoop > sample.txt
+mkdir retail
+mkdir retail/customers
+echo Another sample > retail/customers/sss.txt
+hadoop fs -ls /
+hadoop fs -df hdfs:/
+hadoop fs -count hdfs:/
+hadoop fsck - /
+hadoop balancer
+hadoop fs -mkdir /user/training/hadoop
+hadoop fs -put sample.txt /user/training/hadoop
+hadoop fs -ls /user/training/hadoop
+hadoop fs -put retail /user/training/hadoop
+hadoop fs -ls
+hadoop fs -du -s -h hadoop/retail
+hadoop fs -rm hadoop/retail/customers
+hadoop fs -ls hadoop/retail/customers
+hadoop fs -rm hadoop/retail/*
+hadoop fs -expunge
+hadoop fs -rm -r hadoop/retail
+hadoop fs -ls hadoop
+hadoop fs -copyFromLocal /home/training/purchases.txt hadoop/
+hadoop fs -cat hadoop/purchases.txt
+hadoop fs -copyToLocal hadoop/purchases.txt /home/training/data
+hadoop fs -cp /user/training/*.txt /user/training/hadoop
+hadoop fs -get hadoop/sample.txt /home/training/
+hadoop fs -tail hadoop/purchases.txt
+hadoop fs -ls hadoop/purchases.txt
+sudo -u hdfs hadoop fs -chmod 600 hadoop/purchases.txt
+hadoop fs -ls hadoop/purchases.txt
+sudo -u hdfs hadoop fs -chown root:root hadoop/purchases.txt
+hadoop fs -ls hadoop/purchases.txt
+sudo -u hdfs hadoop fs -chgrp training hadoop/purchases.txt
+hadoop fs -mv hadoop apache_hadoop
+hadoop fs -setrep -w 2 apache_hadoop/sample.txt
+hadoop fs -distcp hdfs://namenodeA/apache_hadoop hdfs://namenodeB/hadoop
+hadoop fs -expunge
+sudo -u hdfs hdfs dfsadmin -safemode leave
+hadoop fs
+hadoop fs -help
+
+
+
+
+row format delimited fields terminate by ',' stored as textfile;
+load data local inpath '....' into table emp;
+
+
+
+
+
+
+
+ 1. pig -x local
+
+        pig.txt: 1,abc,2000
+             2,def,3000
+             3,ghi,4000
+        
+        2. employeeData = '/home/cloudera/pig.txt' USING PigStorage(',') AS (id:int,name:chararray,salary:int);
+        
+        3. DESCRIBE employeeData
+        
+        4. DUMP employeeData;
+        
+        5. filterData = FILTER employeeData BY salary>2000;
+        
+        6. DUMP filterData;
+        
+        7. salaryDetails = FOREACH employeeData GENERATE id,salary;
+        
+        8. DUMP salaryDetails;
+        
+        9. Create student.txt: 1,abc,20,96
+                            2,def,21,97
+                           3,ghi,22,99
+                       4,jkl,21,98
+                       5,mno,20,92
+        
+        10. studentData = '/home/cloudera/student.txt' USING PigStorage(',') AS (id:int,name:chararray,age:int,marks:int);
+        
+        11. groupedStudentData = GROUP studentData BY age;
+        
+        12. DUMP groupedStudentData;
+        
+        13. innerJoin = JOIN employeeData BY id, studentData BY id;
+        
+        14. DUMP innerJoin;
+        
+        
+        
+        
+        
+        
+        
+        
+sqoop import \
+--connect jdbc:mysql://localhost/mydatabase \
+--username myuser \
+--password mypassword \
+--table mytable \
+--m 1 \
+--target-dir /user/hadoop/hdfsdir        
+        
+        
+        
+        
+sqoop export \
+--connect jdbc:mysql://localhost/mydatabase \
+--username myuser \
+--password mypassword \
+--table mytable \
+--export-dir /user/hadoop/hdfsdir
+
+
